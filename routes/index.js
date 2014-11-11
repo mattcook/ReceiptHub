@@ -18,8 +18,8 @@ router.post('/parse', function(req, res) {
   });
 });
 
-router.get('/', function(req, res) {
-  res.render('index', { title: 'ReceiptHub' });
+router.get('/login', function(req, res) {
+  res.render('login', { title: 'ReceiptHub' });
 });
 
 
