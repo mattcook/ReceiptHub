@@ -22,5 +22,12 @@ router.get('/login', function(req, res) {
   res.render('login', { title: 'ReceiptHub' });
 });
 
+router.post('/login', function(req, res) {
+  res.redirect('/transactions');
+});
+
+router.get('/transactions', function(req, res) {
+    res.render('transactions', { title: 'Transactions'})
+});
 
 module.exports = router;

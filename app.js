@@ -6,8 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer  = require('multer');
 var routes = require('./routes/index');
-
+var mongo = require('mongodb');
+var monk = require('monk');
 var app = express();
+
+//DB setup
+var db = monk('localhost:27017/receipthub');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +25,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ dest: './uploads/'}))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 
 app.use('/', routes);
 
