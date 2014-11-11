@@ -23,6 +23,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
+  //login AUTH
   res.redirect('/transactions');
 });
 
