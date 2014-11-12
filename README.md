@@ -8,7 +8,7 @@ Tesseract
 
 Stack
 ---------------------
-less, ejs, nodejs, express, Bash
+nodejs, express, firebase, Bash, ejs
 
 to start development server:
  >npm install
