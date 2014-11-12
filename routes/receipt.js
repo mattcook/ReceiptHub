@@ -13,29 +13,46 @@ var fs = require('fs')
     res.render('upload', { title: 'upload'})
   })
 
-  .post('/parse', function(req, res) {
-   var ex_script = __dirname+"/../scripts/ocr.sh "+__dirname+"/../"+req.files.image.path
-   exec(ex_script, function(error, stdout, stderr) {
-    tesseract.process(req.files.image.path, function (err,text) {
-      var pretty_text = text.split("\n").join(" ");
-      fs.unlink(req.files.image.path);
-      console.log(pretty_text);
-      });
-    });
-  })
+  //Not needed for demo
 
-  .post('/gps', function(req,res) {
-    gm(req.files.image.path)
+  // .post('/ocr', function(req, res) {
+  //   var ex_script = __dirname+"/../scripts/ocr.sh "+__dirname+"/../"+req.files.image.path
+  //   exec(ex_script, function(error, stdout, stderr) {
+  //   tesseract.process(req.files.image.path, function (err,text) {
+  //     var pretty_text = text.split("\n").join(" ");
+  //     fs.unlink(req.files.image.path);
+  //     res.send(pretty_text);
+  //     });
+  //   });
+  // })
+
+  .post('/meta', function(req,res) {
+    var tmp_file = req.files.image.path;
+
+    gm(tmp_file)
     .options({imageMagick: true})
     .identify('%[EXIF:*GPSLongitude*]%[EXIF:*GPSLatitude*]%[EXIF:*DateTime*]', function(err,exif) {
-      fs.unlink(req.files.image.path);
       var meta = parseMetaData(exif);
+      uploadImage(tmp_file, meta.date);
+
       google.reverseGeocode(meta.gps, function(err, data){
         meta.address = data.results[0].formatted_address;
         res.send(meta);
       });
     });
   });
+
+
+function uploadImage(tmp_file, fileName){
+  fs.readFile(tmp_file , function(err, data) {
+    fs.writeFile("./uploads/"+fileName+".jpg", data, function(err) {
+        fs.unlink(tmp_file, function(){
+            if(err) throw err;
+            return true;
+        });
+    });
+  });
+}
 
 function parseMetaData(exif) {
 
@@ -50,9 +67,9 @@ function parseMetaData(exif) {
   var dd_lat = DMStoDD(lat,lat_d);
   var dd_lon = DMStoDD(lon,lon_d);
 
-  var time = meta[4].replace("exif:DateTime=","");
+  var date = meta[4].replace("exif:DateTime=","");
 
-  var data = { gps: dd_lat+", "+dd_lon, time: time };
+  var data = { gps: dd_lat+", "+dd_lon, date: date };
   return data;
 }
 
