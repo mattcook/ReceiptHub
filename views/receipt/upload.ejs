@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <%- include partials/header.ejs %>
+  <%- include ../partials/header.ejs %>
   <body>
-    <%- include partials/nav.ejs %>
+    <%- include ../partials/nav.ejs %>
     <div class='container'>
       <form role="form" class="col-lg-4" method="post" enctype="multipart/form-data" action="/receipt/meta">
         <div class="form-group">
@@ -13,6 +13,7 @@
          <input type="file" name="image" style="" required>
        </div>
          <button class="btn btn-primary" type="submit">Submit</button>
+         <a class="btn btn-default" href="/transaction">Cancel</button>
       </form>
     </div>
   </body>

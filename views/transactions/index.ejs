@@ -8,7 +8,12 @@
     <%- include ../partials/nav.ejs %>
     <div class="container">
       <div class="todoAppContainer">
-          <h2>Transactions</h2>
+          <div class="row">
+            <h2 class='col-lg-2'>Transactions</h2>
+            <h2 class="col-lg-2">
+              <a href="receipt/upload" class='btn btn-default'>add</a>
+            </h2>
+          </div>
           <!--React Div -->
           <div id="Transactions"></div>
       </div>
