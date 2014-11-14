@@ -8,6 +8,8 @@ var util = require('util');
 var fs = require('fs')
   , gm = require('gm');
 
+var receiptRef = fbRef.child("receipts");
+var userRef = fbRef.child('users/1');
 
   router.get('/', function(req,res) {
     res.render('upload', { title: 'upload'})
@@ -33,15 +35,22 @@ var fs = require('fs')
     .options({imageMagick: true})
     .identify('%[EXIF:*GPSLongitude*]%[EXIF:*GPSLatitude*]%[EXIF:*DateTime*]', function(err,exif) {
       var meta = parseMetaData(exif);
-      uploadImage(tmp_file, meta.date);
-
+      meta.upload = new Date(); //add upload time
       google.reverseGeocode(meta.gps, function(err, data){
         meta.address = data.results[0].formatted_address;
-        res.send(meta);
+
+        //Push receipt info to Firebase
+        var newReceipt = receiptRef.push(meta);
+
+        //create user receipt to attach when transaction is added
+        userRef.child("receipts").child(newReceipt.key()).set(req.body.price);
+
+        //upload image
+        uploadImage(tmp_file, newReceipt.key());
+        res.send(req.body);
       });
     });
   });
-
 
 function uploadImage(tmp_file, fileName){
   fs.readFile(tmp_file , function(err, data) {

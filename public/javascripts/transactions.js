@@ -7,22 +7,19 @@ var Trans = React.createClass({
               <tr key= { index } >
               <td>{ item.date }</td>
               <td>{ item.merchant }</td>
-              <td>{ item.price }</td>
+              <td>${ item.price }</td>
               </tr>
       );
     };
     return (
-        <table className="table table-striped">
-          <tbody>
+        <table className="table table-striped"><tbody>
           <tr>
             <th>Date</th>
             <th>Merchant</th>
             <th>Price</th>
           </tr>
           { this.props.items.map(createTransaction) }
-          </tbody>
-        </table>
-      );
+          </tbody></table>);
   }
 });
 
@@ -53,16 +50,6 @@ var UserTrans = React.createClass({
 
   onChange: function(e) {
     this.setState({text: e.target.value});
-  },
-
-  handleSubmit: function(e) {
-    e.preventDefault();
-    if (this.state.text && this.state.text.trim().length !== 0) {
-      this.firebaseRef.push({
-        text: this.state.text
-      });
-      this.setState({text: ""});
-    }
   },
 
   render: function() {
