@@ -7,11 +7,12 @@ router
   })
 
   .post('/login', function(req, res) {
-    res.redirect('/transactions')
+    res.redirect('/transaction')
   })
 
   .get('/', function(req,res) {
-    res.redirect('/login')
+    //res.redirect('/login')
+    res.render('login', { layout: 'login', title: 'ReceiptHub' })
   })
 
 module.exports = router;
