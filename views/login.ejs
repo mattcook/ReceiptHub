@@ -4,14 +4,12 @@
   <%- include partials/header.ejs %>
   <body id="login-page">
     <div class="container">
-
       <form class="form-signin panel" id="login-panel" role="form" action="/login" method="post">
         <div class="logo"><img src="images/logo.png"/></div>
-        <input type="email" class="form-control" placeholder="Username" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input name='email' type="email" class="form-control" placeholder="Username" required autofocus>
+        <input name='password' type="password" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block btn-login" type="submit">Sign in</button>
       </form>
-
     </div> <!-- /container -->
   </body>
 </html>
