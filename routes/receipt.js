@@ -12,7 +12,7 @@ var receiptRef = fbRef.child("receipts");
 var userRef = fbRef.child('users/1');
 
   router.get('/upload', function(req,res) {
-    res.render('receipt/upload', { title: 'Upload'})
+    res.render('receipt/new', { title: 'Upload'})
   })
 
   //Not needed for demo
