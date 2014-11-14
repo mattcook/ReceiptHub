@@ -38,8 +38,7 @@ var userRef = fbRef.child('users/1');
       //add upload time
       google.reverseGeocode(meta.gps, function(err, data){
         meta.address = data.results[0].formatted_address;
-        meta.upload = new Date();
-
+        meta.upload = new Date().toString();
         //Push receipt info to Firebase
         var newReceipt = receiptRef.push(meta);
 
@@ -66,22 +65,24 @@ function uploadImage(tmp_file, fileName){
 }
 
 function parseMetaData(exif) {
+  if (exif) {
+    var meta = exif.split("\n");
 
-  var meta = exif.split("\n");
+    var lon = meta[0].replace("exif:GPSLongitude=","").split(",");
+    var lat = meta[2].replace("exif:GPSLatitude=","").split(",");
 
-  var lon = meta[0].replace("exif:GPSLongitude=","").split(",");
-  var lat = meta[2].replace("exif:GPSLatitude=","").split(",");
+    var lon_d = meta[1].replace("exif:GPSLongitudeRef=","");
+    var lat_d = meta[3].replace("exif:GPSLatitudeRef=","");
 
-  var lon_d = meta[1].replace("exif:GPSLongitudeRef=","");
-  var lat_d = meta[3].replace("exif:GPSLatitudeRef=","");
+    var dd_lat = DMStoDD(lat,lat_d);
+    var dd_lon = DMStoDD(lon,lon_d);
 
-  var dd_lat = DMStoDD(lat,lat_d);
-  var dd_lon = DMStoDD(lon,lon_d);
+    var date = meta[4].replace("exif:DateTime=","");
 
-  var date = meta[4].replace("exif:DateTime=","");
-
-  var data = { gps: dd_lat+", "+dd_lon, date: date };
-  return data;
+    var data = { gps: dd_lat+", "+dd_lon, date: date };
+    return data;
+  }
+  return false;
 }
 
 function DMStoDD(dms, direction) {
