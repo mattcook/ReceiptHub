@@ -3,7 +3,7 @@ var router = express.Router();
 
 router
   .get('/login', function(req, res) {
-    res.render('login', { title: 'ReceiptHub' })
+    res.render('/login/login', { layout: 'login', title: 'ReceiptHub' })
   })
 
   .post('/login', function(req, res) {
@@ -11,8 +11,12 @@ router
   })
 
   .get('/', function(req,res) {
-    //res.redirect('/login')
-    res.render('login', { layout: 'login', title: 'ReceiptHub' })
+    res.redirect('/login')
+
   })
+
+  .get('/budget', function(req,res){
+    res.render('budget/spending');
+  });
 
 module.exports = router;
