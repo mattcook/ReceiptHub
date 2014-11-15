@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var transRef = fbRef.child("transactions");
-var userRef = fbRef.child("users/1");
+
 
 router
  .get('/', function(req, res) {
@@ -13,6 +13,7 @@ router
   })
 
   .post('/add', function(req,res) {
+    var userRef = fbRef.child("users/"+req.session.uid);
     var newTrans = transRef.push(req.body);
     userRef.child("transactions").child(newTrans.key()).set(true);
 
@@ -22,6 +23,7 @@ router
   });
 
 function connectReceipt( price, transactionID ) {
+  var userRef = fbRef.child("users/"+req.session.uid);
    userRef.child('receipts').once('value', function(snap) {
        if (snap.numChildren() == 1) {
          snap.forEach(function(receiptSnap){

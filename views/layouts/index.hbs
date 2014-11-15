@@ -7,6 +7,11 @@
   </head>
   <body>
       {{>nav}}
-      {{{body}}}
+        <div class="row">
+          {{>leftNav}}
+          <div class="col-sm-offset-2 col-xs-offset-3 col-md-offset-1 col-sm-10">
+            {{{body}}}
+          </div>
+      </div>
   </body>
 </html>

@@ -9,7 +9,6 @@ var fs = require('fs')
   , gm = require('gm');
 
 var receiptRef = fbRef.child("receipts");
-var userRef = fbRef.child('users/1');
 
   router.get('/upload', function(req,res) {
     res.render('receipt/new', { title: 'Upload'})
@@ -29,6 +28,8 @@ var userRef = fbRef.child('users/1');
   // })
 
   .post('/meta', function(req,res) {
+    var userRef = fbRef.child('users/'+req.session.uid);
+    
     var tmp_file = req.files.image.path;
 
     gm(tmp_file)

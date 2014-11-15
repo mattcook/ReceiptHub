@@ -54,3 +54,34 @@
   background-color: #20c05c;
   border-color: #20c05c;
 }
+
+#leftNav{
+  position:absolute;
+  background-color:#333;
+  left:0;
+  top: 50px;
+  height:100%;
+  width:90px;
+}
+
+.leftNav-btn {
+  margin-left: 20px;
+  height: 110px;
+  width: 70px;
+  color: #929292;
+
+}
+
+.leftNav-active {
+  border-right: 3px solid #20c05c;
+}
+
+.leftNav-btn i {
+  margin-top: 20px;
+  color: #929292;
+
+}
+
+
+.leftNav-btn p {
+}
