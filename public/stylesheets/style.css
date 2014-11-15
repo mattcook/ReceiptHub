@@ -65,23 +65,23 @@
 }
 
 .leftNav-btn {
-  margin-left: 20px;
+  margin-left: 10px;
   height: 110px;
-  width: 70px;
+  width: 80px;
   color: #929292;
 
 }
 
 .leftNav-active {
   border-right: 3px solid #20c05c;
+  color: #efefef;
 }
 
 .leftNav-btn i {
+  padding-left: 10px;
   margin-top: 20px;
-  color: #929292;
-
 }
 
-
 .leftNav-btn p {
+  width: 70px;
 }
