@@ -9,7 +9,7 @@ router
   .post('/login', function(req, res) {
     if (req.body.email == "matt@receipthub.com"){
       req.session.uid = '1'
-      res.redirect('/transaction')
+      res.redirect('/')
     }else {
       res.redirect('/login');
     }

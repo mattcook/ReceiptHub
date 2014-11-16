@@ -65,15 +65,15 @@
 }
 
 .leftNav-btn {
-  margin-left: 10px;
+  padding-left: 10px;
   height: 110px;
-  width: 80px;
+  width: 90px;
   color: #929292;
 
 }
 
 .leftNav-active {
-  border-right: 3px solid #20c05c;
+  border-right: 4px solid #20c05c;
   color: #efefef;
 }
 
@@ -84,4 +84,53 @@
 
 .leftNav-btn p {
   width: 70px;
+}
+
+.leftNav-btn a {
+  color: #929292;
+  text-decoration: none;
+}
+
+.leftNav-active a {
+  color: #efefef;
+}
+
+.leftNav-btn:hover{
+  background-color: #eee;
+}
+
+.add-trans {
+  color: black;
+}
+
+.add-trans:hover {
+  color: #929292;
+}
+
+.rh-receipt{
+  color: #9d9d9d;
+}
+
+/* COLORS */
+.rh-food{
+  color: #20c05c;
+}
+.rh-appliances{
+  color: red;
+}
+
+.rh-entertainment{
+  color:purple;
+}
+
+.rh-electronics{
+  color: orange;
+}
+
+#main-div {
+  margin-left: 70px;
+}
+
+.fa-usd {
+  margin-left: 10px;
 }

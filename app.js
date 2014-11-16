@@ -28,7 +28,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ dest: './uploads'}))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(session({secret: 'Receipt123'}))
+app.use(session({secret: 'Receipt123',
+                saveUninitialized: true,
+                 resave: true
+               }
+               ));
 
 //Routes
 var index = require('./routes/index');
