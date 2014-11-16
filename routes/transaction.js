@@ -17,13 +17,12 @@ router
     var newTrans = transRef.push(req.body);
     userRef.child("transactions").child(newTrans.key()).set(true);
 
-    connectReceipt(req.body.price, newTrans.key())
+    connectReceipt(req.body.price, newTrans.key(), userRef)
     res.redirect('/transaction');
 
   });
 
-function connectReceipt( price, transactionID ) {
-  var userRef = fbRef.child("users/"+req.session.uid);
+function connectReceipt( price, transactionID, userRef ) {
    userRef.child('receipts').once('value', function(snap) {
        if (snap.numChildren() == 1) {
          snap.forEach(function(receiptSnap){
