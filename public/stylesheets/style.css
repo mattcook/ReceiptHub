@@ -65,7 +65,7 @@
   border-color: #20c05c;
 }
 
-.btn-login,.btn-primary:hover {
+.btn-login:hover ,.btn-primary:hover {
   background-color: #1caa52;
   border-color: #1caa52;
 }
