@@ -60,9 +60,14 @@
   background-color: #efefef;
 }
 
-.btn-login {
+.btn-login,.btn-primary {
   background-color: #20c05c;
   border-color: #20c05c;
+}
+
+.btn-login,.btn-primary:hover {
+  background-color: #1caa52;
+  border-color: #1caa52;
 }
 
 #mobile-nav{
