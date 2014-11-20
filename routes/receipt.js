@@ -16,11 +16,7 @@ var receiptRef = fbRef.child("receipts");
 
   .get('/:id', function(req,res){
     res.render('receipt/show', {
-        test: "44",
-        receipt: {
-          id: 1,
-          name: "The Bay"
-        }
+        receipt: req.params.id,
     });
   })
 
@@ -38,7 +34,7 @@ var receiptRef = fbRef.child("receipts");
   // })
 
   .post('/meta', function(req,res) {
-    var userRef = fbRef.child('users/'+req.session.uid);
+    var userRef = fbRef.child('users/1');
 
     var tmp_file = req.files.image.path;
 
@@ -48,7 +44,9 @@ var receiptRef = fbRef.child("receipts");
       var meta = parseMetaData(exif);
       //add upload time
       google.reverseGeocode(meta.gps, function(err, data){
-        meta.address = data.results[0].formatted_address;
+        if (exif != undefined) {
+          meta.address = data.results[0].formatted_address;
+        }
         meta.upload = new Date().toString();
         //Push receipt info to Firebase
         var newReceipt = receiptRef.push(meta);
@@ -66,7 +64,7 @@ var receiptRef = fbRef.child("receipts");
 
 function uploadImage(tmp_file, fileName){
   fs.readFile(tmp_file , function(err, data) {
-    fs.writeFile("./uploads/"+fileName+".jpg", data, function(err) {
+    fs.writeFile("./public/uploads/"+fileName+".jpg", data, function(err) {
         fs.unlink(tmp_file, function(){
             if(err) throw err;
             return true;
@@ -76,7 +74,7 @@ function uploadImage(tmp_file, fileName){
 }
 
 function parseMetaData(exif) {
-  if (exif) {
+  if (exif != undefined) {
     var meta = exif.split("\n");
 
     var lon = meta[0].replace("exif:GPSLongitude=","").split(",");
@@ -93,7 +91,7 @@ function parseMetaData(exif) {
     var data = { gps: dd_lat+", "+dd_lon, date: date };
     return data;
   }
-  return false;
+  return {};
 }
 
 function DMStoDD(dms, direction) {
