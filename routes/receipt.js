@@ -14,6 +14,16 @@ var receiptRef = fbRef.child("receipts");
     res.render('receipt/new', { title: 'Upload'})
   })
 
+  .get('/:id', function(req,res){
+    res.render('receipt/show', {
+        test: "44",
+        receipt: {
+          id: 1,
+          name: "The Bay"
+        }
+    });
+  })
+
   //Not needed for demo
 
   // .post('/ocr', function(req, res) {
@@ -29,7 +39,7 @@ var receiptRef = fbRef.child("receipts");
 
   .post('/meta', function(req,res) {
     var userRef = fbRef.child('users/'+req.session.uid);
-    
+
     var tmp_file = req.files.image.path;
 
     gm(tmp_file)
