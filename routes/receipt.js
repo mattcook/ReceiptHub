@@ -75,7 +75,7 @@ function uploadImage(tmp_file, fileName){
 }
 
 function parseMetaData(exif) {
-  if (exifl.length > 0) {
+  if (exif.length > 0) {
     var meta = exif.split("\n");
     var lon = meta[0].replace("exif:GPSLongitude=","").split(",");
     var lat = meta[2].replace("exif:GPSLatitude=","").split(",");
