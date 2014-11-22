@@ -44,6 +44,7 @@ var receiptRef = fbRef.child("receipts");
       var meta = parseMetaData(exif);
       //add upload time
       google.reverseGeocode(meta.gps, function(err, data){
+        console.log(exif);
         if (exif != undefined) {
           meta.address = data.results[0].formatted_address;
         }
@@ -76,7 +77,7 @@ function uploadImage(tmp_file, fileName){
 function parseMetaData(exif) {
   if (exif != undefined) {
     var meta = exif.split("\n");
-
+    if (meta[4]){
     var lon = meta[0].replace("exif:GPSLongitude=","").split(",");
     var lat = meta[2].replace("exif:GPSLatitude=","").split(",");
 
@@ -90,6 +91,7 @@ function parseMetaData(exif) {
 
     var data = { gps: dd_lat+", "+dd_lon, date: date };
     return data;
+    }
   }
   return {};
 }
