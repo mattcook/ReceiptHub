@@ -152,24 +152,33 @@
   color: #929292;
 }
 
-.rh-receipt{
+/* COLORS */
+
+.rh-auto {
+  color: #490A3D;
+}
+
+.rh-food {
+  color: #8A9B0F;
+}
+.rh-appliances {
+  color: #6A4A3C;
+}
+
+.rh-entertainment {
+  color: #D35400;
+}
+
+.rh-electronics {
+  color: #3498DB;
+}
+
+.rh-receipt {
   color: #9d9d9d;
 }
 
-/* COLORS */
-.rh-food{
-  color: #20c05c;
-}
-.rh-appliances{
-  color: red;
-}
-
-.rh-entertainment{
-  color:purple;
-}
-
-.rh-electronics{
-  color: orange;
+.rh-business {
+  color: #34495e;
 }
 
 #main-div {
