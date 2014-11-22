@@ -15,8 +15,14 @@ var receiptRef = fbRef.child("receipts");
   })
 
   .get('/:id', function(req,res){
-    res.render('receipt/show', {
-        receipt: req.params.id,
+    var rid = req.params.id;
+    receiptRef.child(rid).on("value", function(snapshot) {
+        var test = snapshot.val();
+        console.log(test);
+        res.render('receipt/'+rid, {
+            receipt: test,
+            id: snapshot.key()
+        });
     });
   })
 
@@ -34,31 +40,32 @@ var receiptRef = fbRef.child("receipts");
   // })
 
   .post('/meta', function(req,res) {
-    var userRef = fbRef.child('users/1');
-
     var tmp_file = req.files.image.path;
+    var ex_script = __dirname+"/../scripts/ocr.sh "+__dirname+"/../"+tmp_file
+    var userRef = fbRef.child('users/1');
+    exec(ex_script, function(error, stdout, stderr) {
+      gm(tmp_file)
+      .options({imageMagick: true})
+      .identify('%[EXIF:*GPSLongitude*]%[EXIF:*GPSLatitude*]%[EXIF:*DateTime*]', function(err,exif) {
+        var meta = parseMetaData(exif);
+        //add upload time
+        google.reverseGeocode(meta.gps, function(err, data){
+          console.log(exif);
+          if (exif.length > 0) {
+            meta.address = data.results[0].formatted_address;
+          }
+          meta.upload = new Date().toString();
+          //Push receipt info to Firebase
+          var newReceipt = receiptRef.push(meta);
 
-    gm(tmp_file)
-    .options({imageMagick: true})
-    .identify('%[EXIF:*GPSLongitude*]%[EXIF:*GPSLatitude*]%[EXIF:*DateTime*]', function(err,exif) {
-      var meta = parseMetaData(exif);
-      //add upload time
-      google.reverseGeocode(meta.gps, function(err, data){
-        console.log(exif);
-        if (exif.length > 0) {
-          meta.address = data.results[0].formatted_address;
-        }
-        meta.upload = new Date().toString();
-        //Push receipt info to Firebase
-        var newReceipt = receiptRef.push(meta);
+          //create user receipt to attach when transaction is added
+          userRef.child("receipts").child(newReceipt.key()).set(req.body.price);
 
-        //create user receipt to attach when transaction is added
-        userRef.child("receipts").child(newReceipt.key()).set(req.body.price);
+          //upload image
+          uploadImage(tmp_file, newReceipt.key());
 
-        //upload image
-        uploadImage(tmp_file, newReceipt.key());
-
-        res.redirect("/transaction");
+          res.redirect("/receipt/"+newReceipt.key());
+        });
       });
     });
   });

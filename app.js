@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ dest: './uploads'}))
+app.use(multer({ dest: './public/uploads'}))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({secret: 'Receipt123',
