@@ -7,7 +7,7 @@ router
   })
 
   .post('/login', function(req, res) {
-    if (req.body.email == "matt@receipthub.com"){
+    if (req.body.email){
       req.session.uid = '1'
       res.redirect('/')
     }else {
@@ -19,7 +19,7 @@ router
     if (req.session.uid){
       res.redirect('/transaction');
     }else{
-      res.redirect('/login');
+      res.redirect('/transaction');
     }
   })
 
