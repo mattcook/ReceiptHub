@@ -75,9 +75,8 @@ function uploadImage(tmp_file, fileName){
 }
 
 function parseMetaData(exif) {
-  if (exif != undefined) {
+  if (exifl.length > 0) {
     var meta = exif.split("\n");
-    if (meta[4]){
     var lon = meta[0].replace("exif:GPSLongitude=","").split(",");
     var lat = meta[2].replace("exif:GPSLatitude=","").split(",");
 
@@ -91,7 +90,6 @@ function parseMetaData(exif) {
 
     var data = { gps: dd_lat+", "+dd_lon, date: date };
     return data;
-    }
   }
   return {};
 }
