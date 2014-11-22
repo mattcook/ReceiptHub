@@ -45,7 +45,7 @@ var receiptRef = fbRef.child("receipts");
       //add upload time
       google.reverseGeocode(meta.gps, function(err, data){
         console.log(exif);
-        if (exif != undefined) {
+        if (exif.length > 0) {
           meta.address = data.results[0].formatted_address;
         }
         meta.upload = new Date().toString();
