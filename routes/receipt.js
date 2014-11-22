@@ -18,7 +18,6 @@ var receiptRef = fbRef.child("receipts");
     var rid = req.params.id;
     receiptRef.child(rid).on("value", function(snapshot) {
         var test = snapshot.val();
-        console.log(test);
         res.render('receipt/'+rid, {
             receipt: test,
             id: snapshot.key()
